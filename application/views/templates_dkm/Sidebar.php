@@ -37,6 +37,12 @@
                         <span>Data admin</span>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="<?php echo base_url('dkm/Dashboard_dkm/data_donasi') ?>">
+                        <img src="<?= base_url('uploads/laptop.png'); ?> " width="30px">
+                        <span>Data Donasi</span>
+                    </a>
+                </li>
 
                 <li class="nav-item">
                     <a href="<?= base_url()   ?>auth/logout" class="nav-link">

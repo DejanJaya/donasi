@@ -356,4 +356,63 @@ class Dashboard_admin extends CI_Controller
         $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Delete Donatur Success!!</div>');
         redirect('operator/Dashboard_admin/data_admin');
     }
+
+    public function scan_qrcode()
+    {
+        $data['title'] = 'Scan QRCode';
+        $data['tbl_user'] = $this->db->get_where('tbl_user', ['email' =>
+        $this->session->userdata('email')])->row_array();
+
+        $data['admin'] = $this->Model_admin->tampil_data()->result();
+        $this->load->view('templates_a/Header', $data);
+        $this->load->view('templates_a/Sidebar', $data);
+        $this->load->view('admin/scan_qrcode', $data);
+        $this->load->view('templates_a/Footer');
+    }
+
+    public function tambah_donasi()
+    {
+        $email_donatur       = $this->input->post('email_donatur');
+        $jumlah_donasi       = $this->input->post('jumlah_donasi');
+        $tgl_donasi       = $this->input->post('tgl_donasi');
+        $id_admin = $this->session->userdata('id_adm');
+
+
+        $data = array(
+            'email_donatur'       => $email_donatur,
+            'nominal'     => $jumlah_donasi,
+            'status_donasi'      => "Diterima",
+            'id_admin' => $id_admin
+        );
+
+        // var_dump($data);
+        // die();
+
+        $this->Model_admin->tambah_donasi($data, 'tbl_donasi');
+        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Tambah Donasi Success!!</div>');
+        redirect('operator/Dashboard_admin/scan_qrcode');
+    }
+
+    public function data_donasi()
+    {
+        $data['title'] = 'Data Donasi';
+        $data['tbl_user'] = $this->db->get_where('tbl_user', ['email' =>
+        $this->session->userdata('email')])->row_array();
+
+        $data['donasi'] = $this->Model_admin->tampil_donasi();
+        $this->load->view('templates_a/Header', $data);
+        $this->load->view('templates_a/Sidebar', $data);
+        // $this->load->view('templates_a/Topbar', $data);
+        $this->load->view('admin/D_donasi', $data);
+        $this->load->view('templates_a/Footer');
+    }
+
+    public function hapus_donasi($id_donasi)
+    {
+        $where = array('id_donasi' => $id_donasi);
+        $this->Model_admin->hapus_donasi($where, 'tbl_donasi');
+
+        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Delete Donasi Success!!</div>');
+        redirect('operator/Dashboard_admin/data_donasi');
+    }
 }

@@ -24,7 +24,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 |
 */
 // $config['base_url'] = 'http://localhost:7070/survei_pelanggan/';
-$config['base_url'] = 'http://localhost/donasi_m/';
+// $config['base_url'] = 'http://localhost/donasi_m/';
+$config['base_url'] = 'http://localhost:7070/donasi/';
 
 /*
 |--------------------------------------------------------------------------

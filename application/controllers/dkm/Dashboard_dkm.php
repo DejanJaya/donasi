@@ -308,4 +308,18 @@ class Dashboard_dkm extends CI_Controller
         $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Delete Donatur Success!!</div>');
         redirect('dkm/Dashboard_dkm/data_admin');
     }
+
+    public function data_donasi()
+    {
+        $data['title'] = 'Data Donasi';
+        $data['tbl_user'] = $this->db->get_where('tbl_user', ['email' =>
+        $this->session->userdata('email')])->row_array();
+
+        $data['donasi'] = $this->Model_admin->tampil_donasi();
+        $this->load->view('templates_dkm/Header', $data);
+        $this->load->view('templates_dkm/Sidebar', $data);
+        // $this->load->view('templates_a/Topbar', $data);
+        $this->load->view('admin/D_donasi', $data);
+        $this->load->view('templates_dkm/Footer');
+    }
 }

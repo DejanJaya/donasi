@@ -88,13 +88,14 @@ class Auth extends CI_Controller
                 } else if ($auth->id_role == "2") {
                     $cek = $this->Model_auth->data_level_2($auth->email);
                     foreach ($cek as $val) {
-                        $this->session->set_userdata('id_adm', $val->id);
+                        $this->session->set_userdata('id_adm', $val->id_adm);
                         $this->session->set_userdata('nama', $val->nama);
                     }
                     redirect('operator/Dashboard_admin');
                 } else if ($auth->id_role == "3") {
                     $cek = $this->Model_auth->data_level_3($auth->email);
                     foreach ($cek as $val) {
+                        $this->session->set_userdata('id_dnt', $val->id_dnt);
                         $this->session->set_userdata('nama', $val->nama);
                         $this->session->set_userdata('email', $val->email);
                         $this->session->set_userdata('alamat', $val->alamat);

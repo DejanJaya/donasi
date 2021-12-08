@@ -37,6 +37,12 @@
                         <span>Edit Profile</span>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="<?php echo base_url('donatur/Dashboard_d/data_donasi') ?>">
+                        <img src="<?= base_url('uploads/message.png'); ?> " width="30px">
+                        <span>Data Donasi</span>
+                    </a>
+                </li>
 
                 <li class="nav-item">
                     <a href="<?= base_url()   ?>auth/logout" class="nav-link">

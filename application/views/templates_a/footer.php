@@ -54,6 +54,14 @@
 <script src="<?php echo base_url() ?>assets/dist/js/pages/dashboard.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="<?php echo base_url() ?>assets/dist/js/demo.js"></script>
+
+<!-- Scan QRCode -->
+<script type="text/javascript" src="<?php echo base_url() ?>assets/webcodecamjs/js/filereader.js"></script>
+<script type="text/javascript" src="<?php echo base_url() ?>assets/webcodecamjs/js/qrcodelib.js"></script>
+<script type="text/javascript" src="<?php echo base_url() ?>assets/webcodecamjs/js/webcodecamjs.js"></script>
+<script type="text/javascript" src="<?php echo base_url() ?>assets/webcodecamjs/js/main.js"></script>
+
+
 <script>
     $(document).ready(function() {
         var table = $('#exampleLaporan').DataTable({

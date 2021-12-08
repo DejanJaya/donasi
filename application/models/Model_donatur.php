@@ -51,4 +51,14 @@ class Model_donatur extends CI_Model
         $this->db->where($where);
         $this->db->delete($table);
     }
+
+    public function tampil_donasi($email_donatur)
+    {
+        // return $this->db->get('tbl_donasi');
+        $this->db->from('tbl_donasi');
+        $this->db->join('tbl_donatur', 'tbl_donatur.email = tbl_donasi.email_donatur', 'left');
+        $this->db->join('tbl_admin', 'tbl_admin.id_adm = tbl_donasi.id_admin', 'left');
+        $this->db->where('tbl_donasi.email_donatur', $email_donatur);
+        return $this->db->get()->result();
+    }
 }

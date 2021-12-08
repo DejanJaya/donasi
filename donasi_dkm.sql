@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 06 Des 2021 pada 09.48
--- Versi server: 10.4.21-MariaDB
--- Versi PHP: 7.4.25
+-- Waktu pembuatan: 08 Des 2021 pada 10.08
+-- Versi server: 10.4.11-MariaDB
+-- Versi PHP: 7.4.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -44,6 +44,29 @@ CREATE TABLE `tbl_admin` (
 INSERT INTO `tbl_admin` (`id_adm`, `nama`, `email`, `alamat`, `no_wa`, `gambar`, `password`) VALUES
 (1, 'Ilham', 'ilhamjaya@gmail.com', 'Cikarang selatan, Bekasi - jawa barat', '085712345679', 'avatar.png', 'ilham123'),
 (2, 'Gowokk', 'gowok@gmail.com', 'kp. setu, Kab. Bekasi', '085712345674', 'avatar2.png', 'gowok123');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `tbl_donasi`
+--
+
+CREATE TABLE `tbl_donasi` (
+  `id_donasi` int(2) NOT NULL,
+  `tgl_donasi` date NOT NULL DEFAULT current_timestamp(),
+  `email_donatur` varchar(30) NOT NULL,
+  `nominal` int(11) NOT NULL,
+  `status_donasi` varchar(30) NOT NULL,
+  `id_admin` int(2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `tbl_donasi`
+--
+
+INSERT INTO `tbl_donasi` (`id_donasi`, `tgl_donasi`, `email_donatur`, `nominal`, `status_donasi`, `id_admin`) VALUES
+(1, '2021-12-08', 'ronay@gmail.com', 500000, 'Diterima', 1),
+(2, '2021-12-08', 'donikun@gmail.com', 700000, 'Diterima', 1);
 
 -- --------------------------------------------------------
 
@@ -137,7 +160,7 @@ INSERT INTO `tbl_user` (`id`, `nama`, `email`, `password`, `id_role`, `is_active
 (3, 'vino g', 'vino@gmail.com', '123456', 2, 1, '2021-11-28 00:00:00', 'fino_g_sebastian1.jpg'),
 (4, 'rifki', 'rifki@gmail.com', '123456', 3, 1, '2021-11-28 00:00:00', 'bartez.jpg'),
 (6, 'ronays', 'ronay@gmail.com', '123456', 3, 1, '2021-12-06 00:00:00', 'GitHub-Mark2.png'),
-(7, 'donikun', 'donikun@gmail.com', '123456', 3, 0, '0000-00-00 00:00:00', 'kecap.jpg');
+(7, 'donikun', 'donikun@gmail.com', '123456', 3, 1, '0000-00-00 00:00:00', 'kecap.jpg');
 
 -- --------------------------------------------------------
 
@@ -169,6 +192,12 @@ INSERT INTO `user_token` (`id`, `email`, `token`, `date_created`, `id_user`) VAL
 --
 ALTER TABLE `tbl_admin`
   ADD PRIMARY KEY (`id_adm`);
+
+--
+-- Indeks untuk tabel `tbl_donasi`
+--
+ALTER TABLE `tbl_donasi`
+  ADD PRIMARY KEY (`id_donasi`);
 
 --
 -- Indeks untuk tabel `tbl_donatur`
@@ -209,6 +238,12 @@ ALTER TABLE `user_token`
 --
 ALTER TABLE `tbl_admin`
   MODIFY `id_adm` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT untuk tabel `tbl_donasi`
+--
+ALTER TABLE `tbl_donasi`
+  MODIFY `id_donasi` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT untuk tabel `tbl_donatur`

@@ -106,4 +106,21 @@ class Dashboard_d extends CI_Controller
 			redirect('donatur/Dashboard_d/profile');
 		}
 	}
+
+	public function data_donasi()
+	{
+		$data['title'] = 'Data Donasi';
+		$email_donatur = $this->session->userdata('email');
+		$data['tbl_user'] = $this->db->get_where('tbl_user', ['email' =>
+		$this->session->userdata('email')])->row_array();
+
+		$data['donasi'] = $this->Model_donatur->tampil_donasi($email_donatur);
+		// var_dump($data['donasi']);
+		// die();
+		$this->load->view('templates_d/Header', $data);
+		$this->load->view('templates_d/Sidebar', $data);
+		// $this->load->view('templates_a/Topbar', $data);
+		$this->load->view('donatur/D_donasi', $data);
+		$this->load->view('templates_d/Footer');
+	}
 }

@@ -31,6 +31,11 @@
     <link rel="stylesheet" href="<?= base_url() ?>assets/plugins/summernote/summernote-bs4.css">
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <!-- Scan QRCode -->
+    <link href="<?= base_url() ?>assets/webcodecamjs/css/bootstrap.min.css" rel="stylesheet">
+    <link href="<?= base_url() ?>assets/webcodecamjs/css/style.css" rel="stylesheet">
+
 </head>
 
 <body class="sidebar-mini layout-fixed accent-danger" style="height: auto;">
