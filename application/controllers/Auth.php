@@ -82,7 +82,7 @@ class Auth extends CI_Controller
                 if ($auth->id_role == "1") {
                     $cek = $this->Model_auth->data_level_1($auth->email);
                     foreach ($cek as $val) {
-                        $this->session->set_userdata('nama', $val->nama);
+                        $this->session->set_userdata('nama_dkm', $val->nama);
                     }
                     redirect('dkm/Dashboard_dkm');
                 } else if ($auth->id_role == "2") {

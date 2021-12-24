@@ -136,13 +136,15 @@ class Dashboard_admin extends CI_Controller
         $this->load->view('templates_a/Footer');
     }
 
-    public function edit_donatur($id)
+    // public function edit_donatur($id)
+    public function edit_donatur($id_dnt)
     {
         $data['title'] = 'Detail Donatur';
         $data['tbl_user'] = $this->db->get_where('tbl_user', ['email' =>
         $this->session->userdata('email')])->row_array();
 
-        $where = $id;
+        // $where = $id;
+        $where = $id_dnt;
         $data['donatur'] = $this->Model_donatur->edit_donatur($where);
 
         $this->load->view('templates_a/Header', $data);
@@ -160,7 +162,8 @@ class Dashboard_admin extends CI_Controller
         $alamat        = $this->input->post('alamat');
         $no_wa         = $this->input->post('no_wa');
         $password      = $this->input->post('password');
-        $id_user       = $this->input->post('id_user');
+        // $id_user       = $this->input->post('id_user');
+        $id_user       = $this->input->post('id');
 
         $gambar        =  $_FILES['gambar']['name'];
         if ($gambar = '') {
@@ -181,7 +184,7 @@ class Dashboard_admin extends CI_Controller
             'nama'       => $nama,
             'email'      => $email,
             'password'   => $password,
-            'gambar'       => $gambar,
+            'gambar'     => $gambar,
         );
 
 
@@ -376,11 +379,15 @@ class Dashboard_admin extends CI_Controller
         $jumlah_donasi       = $this->input->post('jumlah_donasi');
         $tgl_donasi       = $this->input->post('tgl_donasi');
         $id_admin = $this->session->userdata('id_adm');
-
-
+        $nama_admin = $this->session->userdata('nama');
+        $nama_dkm = $this->session->userdata('nama_dkm');
+        $tgl_report = date("d-M-Y");
+        // var_dump($id_admin);
+        // die;
         $data = array(
             'email_donatur'       => $email_donatur,
             'nominal'     => $jumlah_donasi,
+            'tgl_donasi' => $tgl_donasi,
             'status_donasi'      => "Diterima",
             'id_admin' => $id_admin
         );
@@ -389,6 +396,138 @@ class Dashboard_admin extends CI_Controller
         // die();
 
         $this->Model_admin->tambah_donasi($data, 'tbl_donasi');
+
+        $config = [
+            'protocol'  => 'smtp',
+            // 'smtp_host' => 'ssl://smtp.gmail.com',
+            'smtp_host' => 'ssl://smtp.googlemail.com',
+            'smtp_user' => 'toufanhidayat07@gmail.com',
+            'smtp_pass' => 'toufan123',
+            'smtp_port' => '465',
+            'mailtype'  => 'html',
+            'charset'   => 'utf-8',
+            'newline'   => "\r\n"
+        ];
+
+
+        // memanggil library email dan membutuhkan parameternya di ci
+        $this->load->library('email', $config);
+        // sintax ini utuk mengirim email aktiv dari registrasi yg baru di buat!!!!
+        $this->email->initialize($config);
+
+        $this->email->from('toufanhidayat07@gmail.com', 'DEWAN KEMAKMURAN MASJID
+        RIYADHUS SHALIHIN');
+        $this->email->to($email_donatur);
+        // $this->email->to('nurulraws@gmail.com');
+
+        // verify ini sama dengan yg ada di atas(sendEmail), cek verifikasi
+
+        $this->email->subject('Laporan Donasi');
+        $htmlContent = ' 
+                <html> 
+                <head> 
+                    <style>
+                        #nav {
+                            width:100%;
+                            height:80px;
+                            background-color:#F8FAFC; 
+                        }
+
+                        #header {
+                            color:#BBBFC3;
+                            margin-left:390px !important;
+                            padding-top:25px !important;
+                            font-family: Merriweather, serif;
+                            font-weight: 700;
+                            font-size: 28px;
+                            line-height: 34px;
+                        }
+
+                        #otp {
+                            color:#BBBFC3;
+                            margin-left:390px !important;
+                            padding-top:-10px !important;
+                            font-family: Merriweather, serif;
+                            font-weight: 700;
+                            font-size: 28px;
+                            line-height: 34px;
+                        }
+
+                        #desc {
+                            margin-left:390px !important;
+                            color:black;
+                        }
+
+                        #bg-btn{
+                            width:190px;
+                            height:45px;
+                            background-color:#244295; 
+                            border-radius:5px; 
+                            margin-left:510px !important;
+                            margin-top:-30px !important;
+                        }
+
+                        #btn {
+                            color:white;
+                            font-size:20px !important;
+                            text-decoration:none;
+                            margin-top:-50px !important;
+                            padding-top:5px !important;
+                            padding-left:18px !important;
+                            font-family: Merriweather, serif;
+                            font-weight: 700;
+                            font-size: 28px;
+                            line-height: 34px;
+                            display:block;
+                        }
+
+                        #desc-1 {
+                            margin-left:390px !important;
+                            color:black;
+                            margin-top:-50px !important;
+                        }
+
+                        #desc-2 {
+                            margin-left:200px !important;
+                            color:black;
+                        }
+
+                        #footer {
+                            margin-left:390px !important;
+                            color:#0F0E20;
+                        }
+                    </style>
+
+                </head> 
+                <body>
+                    <h1 style="color:black;margin-left:170px !important">DEWAN KEMAKMURAN MASJID RIYADHUS SHALIHIN</h1><br> 
+                    <h4 style="color:black;margin-left:170px !important">Kepada donatur ' . $email_donatur . ' yang terhormat, dengan ini kami menyampaikan hasil laporan keuangan:</h4>
+                    <br>
+                    <h4 id="desc" >Tanggal Donasi: ' . $tgl_donasi . '</h4> 
+                    <h4 id="desc" >Email: ' . $email_donatur . '</h4> 
+                    <h4 id="desc" >Nominal: Rp. ' .  number_format($jumlah_donasi, 0, '', '.') . '</h4> 
+                    <h4 id="desc" >Status Donasi: Diterima</h4> 
+                    <h4 id="desc" >Diproses Oleh: ' . $nama_admin . '</h4> 
+                    <h4 id="desc-1" style="text-align:right">Bekasi, ' . $tgl_report . '</h4>
+                    <h4 id="desc-1" style="text-align:right">DKM Masjid Riyadhus Shalihin</h4><br><br><br><br>
+                    <h4 id="desc-1" style="text-align:right">' . $nama_admin . '</h4>
+                    
+                
+                </body> 
+                </html>';
+        // $this->email->message('Click this link to verify you account : <a href="' . base_url() . 'auth/verify?email=' . $this->input->post('email') . '&token=' . urlencode($token) . '">Activate</a>');  //sintax ini utk membuat link aktivasi ke gmail
+        $this->email->message($htmlContent);  //sintax ini utk membuat link aktivasi ke gmail
+
+        if ($this->email->send()) {
+            // return true;
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Tambah Donasi Success!!</div>');
+            return redirect('operator/Dashboard_admin/scan_qrcode');
+        } else {
+            // echo $this->email->print_debugger();
+            // die;
+            echo $this->email->print_debugger();
+        }
+
         $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Tambah Donasi Success!!</div>');
         redirect('operator/Dashboard_admin/scan_qrcode');
     }
@@ -414,5 +553,15 @@ class Dashboard_admin extends CI_Controller
 
         $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Delete Donasi Success!!</div>');
         redirect('operator/Dashboard_admin/data_donasi');
+    }
+
+    public function cetak_laporan($id_donasi)
+    {
+        $data['donasi'] = $this->Model_admin->laporan_donasi($id_donasi);
+        $this->load->library('pdf');
+        $this->pdf->set_option('isRemoteEnabled', true);
+        $this->pdf->setPaper('A4', 'potrait');
+        $this->pdf->filename = "laporan.pdf";
+        $this->pdf->load_view('admin/laporan_donasi', $data);
     }
 }

@@ -38,7 +38,7 @@
                                 <th>NOMINAL</th>
                                 <th>STATUS DONASI</th>
                                 <th>DIPROSES OLEH</th>
-                                <th colspan="3">AKSI</th>
+                                <th style="text-align:center;" colspan="3">AKSI</th>
                             </tr>
 
                             <?php
@@ -56,6 +56,13 @@
                                     <td><?php echo $adm->nama ?></td>
                                     <!-- tombol button -->
                                     <td> <?php echo anchor('operator/Dashboard_admin/hapus_donasi/' . $adm->id_donasi, '<div class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></div>') ?> </td>
+
+                                    <td> <?php echo anchor('operator/Dashboard_admin/cetak_laporan/' . $adm->id_donasi, '<div class="btn btn-success btn-sm"><i class="fas fa-print"></i></div>') ?> </td>
+                                    <!-- <td> <a href="https://api.whatsapp.com/send?phone=+62881024497718&text=test&text=https://www.twilio.com/docs/whatsapp/tutorial/send-and-receive-media-messages-whatsapp-php" data-action="share/whatsapp/share">Share via Whatsapp web</a>
+                                    </td> -->
+                                    <!-- <td> <?php echo anchor('operator/Dashboard_admin/share_laporan/' . $adm->id_donasi, '<div class="btn btn-primary btn-sm"><i class="fas fa-share-alt-square"></i></div>') ?> </td> -->
+
+
                                 </tr>
 
                             <?php endforeach; ?>
